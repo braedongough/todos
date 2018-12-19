@@ -1,22 +1,33 @@
-import uuid from 'uuid'
+import database from '../firebase/firebase'
 
-export const addTodo = ({
-    description,
-    completed = false
-
-}) => ({
+export const addTodo = (todo) => ({
     type: 'ADD_TODO',
-    todo: {
-        description,
-        id: uuid(),
-        completed
-    }
+    todo
 })
 
-export const removeTodo = ({id}) => ({
+export const startAddTodo = (todoData = {}) => {
+    return async (dispatch) => {
+        const {
+            description,
+            completed = false
+        } = todoData
+        const todo = { description, completed }
+        const ref = await database.ref('todos').push(todo)
+        dispatch(addTodo({ id: ref.key, ...todo }))
+    }
+}
+
+export const removeTodo = ({ id }) => ({
     type: 'REMOVE_TODO',
     id
 })
+
+export const startRemoveTodo = (id) => {
+    return async (dispatch) => {
+        await database.ref(`todos/${id}`).remove()
+        dispatch(removeTodo({ id }))
+    }
+}
 
 export const toggleCompleted = (id, completed) => ({
     type: 'TOGGLE_COMPLETED',

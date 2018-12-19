@@ -1,26 +1,31 @@
 import React from 'react'
-import { removeTodo, toggleCompleted } from '../actions/todos'
+import { startRemoveTodo, toggleCompleted } from '../actions/todos'
 import { connect } from 'react-redux'
 
 
-const TodoListItem = ({ description, completed, dispatch, id }) => {
+const TodoListItem = ({ description, completed, toggleCompleted, startRemoveTodo, id }) => {
     return (
         <div>
             <label>
-                <input 
+                <input
                     type="checkbox"
                     checked={completed}
                     onChange={() => {
-                        dispatch(toggleCompleted(id, completed))
+                        toggleCompleted(id)
                     }}
                 />
                 {description}
                 <button onClick={() => {
-                    dispatch(removeTodo({ id }))
+                    startRemoveTodo(id)
                 }}>Remove Todo</button>
             </label>
         </div>
     )
 }
 
-export default connect()(TodoListItem)
+const mapDispatchToProps = (dispatch) => ({
+    startRemoveTodo: (id) => { dispatch(startRemoveTodo(id)) },
+    toggleCompleted: (id, completed) => { dispatch(toggleCompleted(id, completed)) }
+})
+
+export default connect(undefined, mapDispatchToProps)(TodoListItem)
