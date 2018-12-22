@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render AddTodoForm correctly 1`] = `
+<div>
+  <form
+    autoComplete="off"
+    onSubmit={[Function]}
+  >
+    <input
+      autoFocus={true}
+      name="todo"
+      placeholder="input new todo"
+      type="text"
+    />
+    <button>
+      Submit
+    </button>
+  </form>
+</div>
+`;

@@ -2,14 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startAddTodo } from '../actions/todos'
 
-export const AddTodoForm = ({ dispatch }) => (
+export const AddTodoForm = ({ startAddTodo }) => (
     <div>
         <form
             autoComplete='off'
             onSubmit={(e) => {
                 e.preventDefault()
                 const description = e.target.todo.value
-                dispatch(startAddTodo({ description }))
+                startAddTodo({ description })
                 e.target.todo.value = ''
             }}>
             <input
@@ -23,4 +23,8 @@ export const AddTodoForm = ({ dispatch }) => (
     </div>
 )
 
-export default connect()(AddTodoForm)
+const mapDispatchToProps = (dispatch) => ({
+    startAddTodo: (todoData) => dispatch(startAddTodo(todoData))
+})
+
+export default connect(undefined, mapDispatchToProps)(AddTodoForm)

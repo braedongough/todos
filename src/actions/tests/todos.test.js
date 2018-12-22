@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import database from '../../firebase/firebase'
+import todos from '../../testConfig/fixtures';
 import {
     addTodo,
     startAddTodo,
@@ -13,20 +14,6 @@ import {
 } from '../todos';
 
 const createMockStore = configureMockStore([thunk])
-
-const todos = [{
-    id: '0',
-    description: 'todo1',
-    completed: true
-}, {
-    id: '1',
-    description: 'todo2',
-    completed: false
-}, {
-    id: '2',
-    description: 'todo3',
-    completed: true
-}]
 
 beforeEach((done) => {
     database.ref('todos').set(todos).then(() => done())
