@@ -6,22 +6,29 @@ import {
     startAddTodo,
     removeTodo,
     startRemoveTodo,
-    toggleCompleted
+    toggleCompleted,
+    startToggleCompleted,
+    setTodos,
+    startSetTodos
 } from '../todos';
 
 const createMockStore = configureMockStore([thunk])
 
+const todos = [{
+    id: '0',
+    description: 'todo1',
+    completed: true
+}, {
+    id: '1',
+    description: 'todo2',
+    completed: false
+}, {
+    id: '2',
+    description: 'todo3',
+    completed: true
+}]
+
 beforeEach((done) => {
-    const todos = [{
-        description: 'todo1',
-        completed: true
-    }, {
-        description: 'todo2',
-        completed: false
-    }, {
-        description: 'todo3',
-        completed: true
-    }]
     database.ref('todos').set(todos).then(() => done())
 })
 
@@ -90,5 +97,42 @@ it('should generate toggleCompleted action object', () => {
         type: 'TOGGLE_COMPLETED',
         id: 'abc123',
         completed: false
+    })
+})
+
+it('should update completed property in firebase and store', (done) => {
+    const store = createMockStore({})
+    const id = 1, completed = true
+    store.dispatch(startToggleCompleted(id, completed)).then(() => {
+        const actions = store.getActions()
+        expect(actions[0]).toEqual({
+            type: 'TOGGLE_COMPLETED',
+            id,
+            completed: !completed
+        })
+    })
+    database.ref(`todos/${id}`).once('value').then((snapshot) => {
+        expect(snapshot.val().completed).toBe(!completed)
+        done()
+    })
+})
+
+it('should generate setTodos action object', () => {
+    const action = setTodos(todos)
+    expect(action).toEqual({
+        type: 'SET_TODOS',
+        todos
+    })
+})
+
+it('should fetch the todos from  firebase', (done) => {
+    const store = createMockStore({})
+    store.dispatch(startSetTodos()).then(() => {
+        const actions = store.getActions()
+        expect(actions[0]).toEqual({
+            type: 'SET_TODOS',
+            todos
+        })
+        done()
     })
 })

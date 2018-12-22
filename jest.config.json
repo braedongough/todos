@@ -1,7 +1,7 @@
 {
     "setupFiles": [
         "raf/polyfill",
-        "<rootDir>/setupTests.js",
+        "<rootDir>/testConfig/setupTests.js",
         "@babel/polyfill"
     ],
     "snapshotSerializers": [

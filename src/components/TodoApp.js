@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import Header from './Header'
 import Filters from './Filters'
 import TodoList from './TodoList'
-import AddTodo from './AddTodo'
+import AddTodoForm from './AddTodoForm'
 import store from '../store/configureStore'
 
 export default () => (
@@ -12,7 +12,7 @@ export default () => (
             <Header />
             <Filters />
             <TodoList />
-            <AddTodo />
+            <AddTodoForm />
         </div>
     </Provider>
 )

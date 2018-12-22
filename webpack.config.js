@@ -1,5 +1,5 @@
+require("@babel/polyfill")
 const path = require('path')
-const polyfill = require("@babel/polyfill")
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 

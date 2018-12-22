@@ -34,3 +34,29 @@ export const toggleCompleted = (id, completed) => ({
     id,
     completed: !completed
 })
+
+export const startToggleCompleted = (id, completed) => {
+    return async (dispatch) => {
+        await database.ref(`todos/${id}/`).update({ completed: !completed })
+        dispatch(toggleCompleted(id, completed))
+    }
+}
+
+export const setTodos = (todos) => ({
+    type: 'SET_TODOS',
+    todos
+})
+
+export const startSetTodos = () => {
+    return async (dispatch) => {
+        const snapshot = await database.ref('todos').once('value')
+        const todos = []
+        snapshot.forEach((childSnapshot) => {
+            todos.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            })
+        })
+        dispatch(setTodos(todos))
+    }
+}

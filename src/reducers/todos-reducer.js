@@ -20,6 +20,8 @@ export default (state = todoDefaultState, action) => {
                     return todo
                 }
             })
+        case 'SET_TODOS':
+            return action.todos
         default:
             return state
     }

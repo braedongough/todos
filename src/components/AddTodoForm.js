@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startAddTodo } from '../actions/todos'
 
-const addTodoForm = ({ dispatch }) => (
+export const AddTodoForm = ({ dispatch }) => (
     <div>
         <form
             autoComplete='off'
@@ -23,4 +23,4 @@ const addTodoForm = ({ dispatch }) => (
     </div>
 )
 
-export default connect()(addTodoForm)
+export default connect()(AddTodoForm)
